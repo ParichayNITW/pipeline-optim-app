@@ -357,7 +357,7 @@ def solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD):
 
     #solver.options['tol']             = 1e-2
     #solver.options['acceptable_tol']  = 1e-2
-    solver.options['max_iter']        = 10000
+    #solver.options['max_iter']        = 10000
     #solver.options['max_cpu_time']    = 400
     #solver.options['warm_start_init_point'] = 'yes'
     #solver.options['warm_start_bound_push'] = 1e-2
