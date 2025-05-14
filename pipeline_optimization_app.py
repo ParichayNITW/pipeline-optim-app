@@ -69,6 +69,11 @@ with st.sidebar:
         Price_HSD = st.number_input("HSD Rate (INR/L)",        value=90.0,   min_value=0.0, step=0.1, format="%.2f")
     run = st.button("Run Optimization")
 
+
+
+import os
+os.environ['NEOS_EMAIL'] = st.secrets["NEOS_EMAIL"]
+
 # ---------------------
 # Main
 # ---------------------

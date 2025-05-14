@@ -1,6 +1,6 @@
 import os
 import pyomo.environ as pyo
-from pyomo.opt import SolverFactory
+from pyomo.opt import SolverFactory, SolverManagerFactory
 from math import log10
 
 # Tell NEOS who you are
@@ -348,7 +348,12 @@ def solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD):
     # --------------------
     # SOLVE & CHECK 
     # --------------------
-    solver = SolverFactory('bonmin', solver_manager='neos')
+    from pyomo.opt import SolverManagerFactory
+
+    # Use the NEOS cloud solver manager
+    solver_mgr = SolverManagerFactory('neos')
+
+
 
     #solver.options['tol']             = 1e-2
     #solver.options['acceptable_tol']  = 1e-2
@@ -359,7 +364,7 @@ def solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD):
     
     if not solver.available():
     	raise RuntimeError("Remote solver not available")
-    results = solver.solve(model, tee=True)
+    results = solver_mgr.solve(model, opt='bonmin', tee=True)
 
     if (results.solver.status != pyo.SolverStatus.ok or
         results.solver.termination_condition != pyo.TerminationCondition.optimal):
