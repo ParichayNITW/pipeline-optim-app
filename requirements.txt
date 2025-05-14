@@ -1,3 +1,5 @@
 streamlit
-pyomo
 pandas
+numpy
+pyomo
+plotly
