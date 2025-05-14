@@ -67,21 +67,29 @@ with st.sidebar:
         SFC_S     = st.number_input("SFC Surendranagar (gm/bhp/hr)", value=220.0, min_value=0.0, step=0.1, format="%.2f")
         RateDRA   = st.number_input("DRA Rate (INR/L)",        value=1.0,    min_value=0.0, step=0.01, format="%.2f")
         Price_HSD = st.number_input("HSD Rate (INR/L)",        value=90.0,   min_value=0.0, step=0.1, format="%.2f")
-    run = st.button("Run Optimization")
+	neos_email = st.text_input("NEOS Email", value="parichay.nitwarangal@gmail.com")
+    	run = st.button("Run Optimization")
 
 
 
-import os
-os.environ['NEOS_EMAIL'] = st.secrets["NEOS_EMAIL"]
-
-# ---------------------
-# Main
-# ---------------------
+# before calling solver, ensure NEOS_EMAIL is set
 if run:
-    with st.spinner("Solving optimization..."):
-        res = solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD)
+    if not neos_email:
+        st.error("Please enter your NEOS-registered email address.")
+    else:
+        os.environ['NEOS_EMAIL'] = neos_email
 
-    stations = ["Vadinar","Jamnagar","Rajkot","Surendranagar","Viramgam"]
+        with st.spinner("Submitting to NEOS… this can take up to 2–3 minutes"):
+            try:
+                res = solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD)
+            except Exception as e:
+                st.error(f"Solver failed: {e}")
+                st.stop()
+    os.environ['NEOS_EMAIL'] = neos_email
+
+    with st.spinner("Solving optimization..."):
+        res = solve_pipeline(…)
+
 
     # KPIs
     total = res.get('total_cost', 0)
