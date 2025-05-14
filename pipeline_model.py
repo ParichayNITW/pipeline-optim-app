@@ -353,7 +353,7 @@ def solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD):
     # Use the NEOS cloud solver manager
     solver_mgr = SolverManagerFactory('neos')
 
-
+    #results = solver_mgr.solve(model, opt='bonmin', tee=True)
 
     #solver.options['tol']             = 1e-2
     #solver.options['acceptable_tol']  = 1e-2
@@ -366,26 +366,21 @@ def solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD):
     	#raise RuntimeError("Remote solver not available")
     
 
-    # Limit Bonmin’s runtime and tolerance when calling via NEOS
+    # Limit Bonmin’s runtime and precision
     bonmin_opts = {
-    	'tol': 1e-2,             # loosen feasibility tolerance
-    	'acceptable_tol': 1e-2,  # loosen acceptable tolerance
-    	'max_cpu_time': 300,     # stop after 5 minutes
-    	'max_iter': 10000        # cap the total iterations
+    	'tol':             1e-2,
+    	'acceptable_tol':  1e-2,
+    	'max_cpu_time':    300,   # 5 minutes max
+    	'max_iter':        10000
     }
 
-
-    results = solver_mgr.solve(model, opt='bonmin', tee=True)
-
-
-    #results = solver_mgr.solve(
-    	#model,
-    	#opt='bonmin',
-    	#tee=False,         # don’t stream the full log
-    	#keepfiles=False,
-    	#remote=True,
-    	#options=bonmin_opts
-    #)
+    # Submit to NEOS without extra flags
+    results = solver_mgr.solve(
+    	model,
+    	opt='bonmin',
+    	tee=False,
+    	options=bonmin_opts
+    )
 
 
 
