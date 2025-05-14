@@ -364,7 +364,28 @@ def solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD):
     
     #if not solver.available():
     	#raise RuntimeError("Remote solver not available")
-    results = solver_mgr.solve(model, opt='bonmin', tee=True)
+    #results = solver_mgr.solve(model, opt='bonmin', tee=True)
+
+
+
+    # Limit Bonmin’s runtime and tolerance when calling via NEOS
+    bonmin_opts = {
+    	'tol': 1e-2,             # loosen feasibility tolerance
+    	'acceptable_tol': 1e-2,  # loosen acceptable tolerance
+    	'max_cpu_time': 300,     # stop after 5 minutes
+    	'max_iter': 10000        # cap the total iterations
+    }
+
+    results = solver_mgr.solve(
+    	model,
+    	opt='bonmin',
+    	tee=False,         # don’t stream the full log
+    	keepfiles=False,
+    	remote=True,
+    	options=bonmin_opts
+    )
+
+
 
     #if (results.solver.status != pyo.SolverStatus.ok or
         #results.solver.termination_condition != pyo.TerminationCondition.optimal):
