@@ -67,7 +67,7 @@ with st.sidebar:
         SFC_S     = st.number_input("SFC Surendranagar (gm/bhp/hr)", value=220.0, min_value=0.0, step=0.1, format="%.2f")
         RateDRA   = st.number_input("DRA Rate (INR/L)",        value=1.0,    min_value=0.0, step=0.01, format="%.2f")
         Price_HSD = st.number_input("HSD Rate (INR/L)",        value=90.0,   min_value=0.0, step=0.1, format="%.2f")
-	neos_email = st.text_input("NEOS Email", value="parichay.nitwarangal@gmail.com")
+	neos_email = st.text_input("NEOS Email", value=parichay.nitwarangal@gmail.com)
     	run = st.button("Run Optimization")
 
 
