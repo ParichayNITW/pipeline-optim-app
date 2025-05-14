@@ -385,7 +385,7 @@ def solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD):
     	#keepfiles=False,
     	#remote=True,
     	#options=bonmin_opts
-    )
+    #)
 
 
 
