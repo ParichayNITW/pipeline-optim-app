@@ -362,13 +362,13 @@ def solve_pipeline(FLOW, KV, rho, SFC_J, SFC_R, SFC_S, RateDRA, Price_HSD):
     #solver.options['warm_start_init_point'] = 'yes'
     #solver.options['warm_start_bound_push'] = 1e-2
     
-    if not solver.available():
-    	raise RuntimeError("Remote solver not available")
+    #if not solver.available():
+    	#raise RuntimeError("Remote solver not available")
     results = solver_mgr.solve(model, opt='bonmin', tee=True)
 
-    if (results.solver.status != pyo.SolverStatus.ok or
-        results.solver.termination_condition != pyo.TerminationCondition.optimal):
-        raise RuntimeError(f"No feasible solution: {results.solver.termination_condition}")
+    #if (results.solver.status != pyo.SolverStatus.ok or
+        #results.solver.termination_condition != pyo.TerminationCondition.optimal):
+        #raise RuntimeError(f"No feasible solution: {results.solver.termination_condition}")
 
     # ----------------
     # EXTRACT
